@@ -23,7 +23,6 @@ var options = {
 
 try {
     const clientId = core.getInput('client-id');
-    console.log(`clientId: ${clientId}!`);
     const clientSecret = core.getInput('client-secret');
 
     bodyData.client_id = clientId;
@@ -31,7 +30,6 @@ try {
     bodyData = JSON.stringify(bodyData);
     options.body = bodyData;
 
-    console.log('getAccessToken options: ', options);
     const payload = JSON.stringify(github.context.payload, undefined, 2)
     // console.log(`The event payload: ${payload}`);
 
@@ -42,14 +40,10 @@ try {
         );
         console.log(body);
 
-        core.setOutput("access-token", body.access_token);
+        core.setOutput("access-token", body);
 
     });
 
-
-    // const time = (new Date()).toTimeString();
-    // core.setOutput("time", time);
-    // Get the JSON webhook payload for the event that triggered the workflow
 } catch (error) {
     core.setFailed(error.message);
 }
