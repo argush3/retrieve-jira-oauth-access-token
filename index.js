@@ -40,7 +40,7 @@ try {
         );
         console.log(body);
 
-        core.setOutput("access-token", body);
+        core.setOutput("access-token", body.access_token);
 
     });
 
