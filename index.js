@@ -35,7 +35,7 @@ async function getAccessToken() {
 
         const response = await request(options);
         console.log("response: ", response);
-        core.setOutput("access-token", response.access_token);
+        core.setOutput("access-token", JSON.parse(response).access_token);
     } catch (error) {
         core.setFailed(error.message);
     }
