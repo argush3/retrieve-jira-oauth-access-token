@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-
+let request = require('request');
 
 var bodyData = `{
         "audience": "api.atlassian.com", 
