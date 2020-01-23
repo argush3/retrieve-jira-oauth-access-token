@@ -1,15 +1,57 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+
+var bodyData = `{
+        "audience": "api.atlassian.com", 
+        "grant_type":"client_credentials",
+        "client_id": '',
+        "client_secret": ''
+    }`;
+
+var options = {
+    method: 'POST',
+    url: 'https://api.atlassian.com/oauth/token',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: {}
+};
+
+
+
 try {
-    // `who-to-greet` input defined in action metadata file
-    const nameToGreet = core.getInput('who-to-greet');
-    console.log(`Hello ${nameToGreet}!`);
-    const time = (new Date()).toTimeString();
-    core.setOutput("time", time);
-    // Get the JSON webhook payload for the event that triggered the workflow
+    const clientId = core.getInput('client-id');
+    console.log(`clientId: ${clientId}!`);
+    const clientSecret = core.getInput('client-secret');
+
+    bodyData.client_id = clientId;
+    bodyData.client_secret = clientSecret;
+    options.body = bodyData;
+
+    console.log('getAccessToken...');
     const payload = JSON.stringify(github.context.payload, undefined, 2)
     console.log(`The event payload: ${payload}`);
+
+    request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+        console.log(
+            'Response getAccessToken: ' + response.statusCode + ' ' + response.statusMessage
+        );
+        console.log(body);
+
+        core.setOutput("access-token", body.access_token);
+
+    });
+
+
+    // const time = (new Date()).toTimeString();
+    // core.setOutput("time", time);
+    // Get the JSON webhook payload for the event that triggered the workflow
 } catch (error) {
     core.setFailed(error.message);
 }
+
+
+

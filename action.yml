@@ -1,13 +1,15 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Jira OAuth Access Token'
+description: 'Github Action used to retrieve a Jira OAuth access token from the Jira Authorization server '
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  client-id:
+    description: 'jira oauth client id'
     required: true
-    default: 'World'
+  client-secret:
+    description: 'jira oauth client secret'
+    required: true
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  access-token:
+    description: 'The access token retrieved from the Jira authorization server'
 runs:
   using: 'node12'
   main: 'index.js'
