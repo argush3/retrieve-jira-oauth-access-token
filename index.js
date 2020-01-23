@@ -30,9 +30,9 @@ try {
     bodyData.client_secret = clientSecret;
     options.body = bodyData;
 
-    console.log('getAccessToken...');
+    console.log('getAccessToken options: ', options);
     const payload = JSON.stringify(github.context.payload, undefined, 2)
-    console.log(`The event payload: ${payload}`);
+    // console.log(`The event payload: ${payload}`);
 
     request(options, function (error, response, body) {
         if (error) throw new Error(error);
